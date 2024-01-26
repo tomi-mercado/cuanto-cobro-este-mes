@@ -23,20 +23,17 @@ const SalaryInput: React.FC = () => {
     }
 
     const dotsInValue = value.match(/\./g)?.length ?? 0;
-
     if (dotsInValue > 1) {
       return;
     }
 
     const numberValue = Number(value);
-
     if (isNaN(numberValue)) {
       return;
     }
 
     const newParams = new URLSearchParams(searchParams);
     newParams.set("salary", value);
-
     window.history.pushState({}, "", `?${newParams.toString()}`);
   };
 
@@ -50,6 +47,7 @@ const SalaryInput: React.FC = () => {
         onChange={handleChange}
         value={value}
         className="pl-14 h-[40px]"
+        placeholder="650"
       />
     </div>
   );

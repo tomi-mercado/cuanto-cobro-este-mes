@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { arsParser } from "@/lib/utils";
 import Example from "./components/Example";
 import Result from "./components/Result";
 import SalaryInput from "./components/SalaryInput";
@@ -31,7 +32,8 @@ export default async function Home() {
         <CardHeader className="pb-4 pt-2">
           <CardTitle className="sm:text-lg">Sueldo en pesos este mes</CardTitle>
           <CardDescription className="text-xs sm:text-sm">
-            Última actualización Dólar MEP: {formatDate(lastUpdate)}
+            Valor Dólar MEP: {arsParser(mepPrice)} (Última actualización:{" "}
+            {formatDate(lastUpdate)})
           </CardDescription>
         </CardHeader>
 
