@@ -40,7 +40,7 @@ export default async function Home({
             <Label htmlFor="salary">Sueldo bruto en USD</Label>
             <SalaryInput />
           </div>
-          <div className="text-center">
+          <div className="text-center flex flex-col items-center gap-1">
             <p className="text-sm">Al día de hoy cobrarías:</p>
             <Result />
           </div>
