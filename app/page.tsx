@@ -29,6 +29,11 @@ export default async function Home({
     newParams.set("dolar-mep", mepPrice.toString());
     redirect(`/?${newParams.toString()}`);
   }
+  const currentMonthStr = capitalize(
+    new Date().toLocaleString("default", {
+      month: "long",
+    })
+  );
 
   return (
     <main className="h-full w-full container p-6 flex items-center flex-col gap-6">
@@ -37,7 +42,9 @@ export default async function Home({
           <Example mepPrice={mepPrice} />
         </div>
         <CardHeader className="pb-4 pt-2">
-          <CardTitle className="sm:text-lg">Sueldo en pesos este mes</CardTitle>
+          <CardTitle className="sm:text-lg">
+            Sueldo en pesos de {currentMonthStr}
+          </CardTitle>
         </CardHeader>
 
         <CardContent className="flex flex-col gap-6">
