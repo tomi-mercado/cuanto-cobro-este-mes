@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { redirect } from "next/navigation";
 import DolarMepInput from "./components/DolarMepInput";
 import Example from "./components/Example";
+import ImportantDays from "./components/ImportantDays";
 import Result from "./components/Result";
 import SalaryInput from "./components/SalaryInput";
 
@@ -46,9 +47,7 @@ export default async function Home({
         </CardContent>
       </Card>
 
-      {/* <div className="flex flex-col gap-4">
-        <p>🕦 Faltan 3 días para cobrar</p>
-      </div> */}
+      <ImportantDays />
     </main>
   );
 }

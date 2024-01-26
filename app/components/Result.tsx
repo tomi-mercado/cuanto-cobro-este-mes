@@ -25,7 +25,6 @@ const Result: React.FC = () => {
     })
     .min(0)
     .safeParse(mepPriceParam);
-  console.log(mepPriceParseResult);
   const mepPrice = mepPriceParseResult.success ? mepPriceParseResult.data : 0;
 
   const result = mepPrice * salary * 0.83;
