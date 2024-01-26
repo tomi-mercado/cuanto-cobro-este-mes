@@ -50,7 +50,7 @@ export default async function Home({
             <SalaryInput />
           </div>
           <div className="text-center flex flex-col items-center gap-1">
-            <p className="text-sm">Al día de hoy cobrarías:</p>
+            <p className="text-sm">Al día de hoy cobrarías (neto):</p>
             <Result />
           </div>
         </CardContent>
