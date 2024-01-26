@@ -1,13 +1,13 @@
 import { z } from "zod";
 
-const SIX_HOURS_IN_SECONDS = 21600;
+const ONE_HOUR_IN_SECONDS = 60 * 60;
 
 const API_URL = "https://dolarapi.com/v1/dolares/bolsa";
 
 export const getDolarMep = async () => {
   const response = await fetch(API_URL, {
     next: {
-      revalidate: SIX_HOURS_IN_SECONDS,
+      revalidate: ONE_HOUR_IN_SECONDS,
     },
   });
 
