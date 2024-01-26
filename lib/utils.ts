@@ -49,3 +49,6 @@ export const numberSchema = z
     coerce: true,
   })
   .min(0);
+
+export const capitalize = (str: string) =>
+  str.charAt(0).toUpperCase() + str.slice(1);
