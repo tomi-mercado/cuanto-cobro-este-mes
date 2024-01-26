@@ -1,7 +1,9 @@
 import { getDolarMep } from "@/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { numberSchema } from "@/lib/utils";
 import { redirect } from "next/navigation";
+import { z } from "zod";
 import DolarMepInput from "./components/DolarMepInput";
 import Example from "./components/Example";
 import ImportantDays from "./components/ImportantDays";
@@ -15,10 +17,17 @@ export default async function Home({
 }) {
   const { mepPrice, lastUpdate } = await getDolarMep();
 
-  if (!searchParams["dolar-mep"]) {
-    const searchParams = new URLSearchParams();
-    searchParams.set("dolar-mep", mepPrice.toString());
-    redirect(`/?${searchParams.toString()}`);
+  const schema = z.object({
+    salary: numberSchema.optional().nullable(),
+    "dolar-mep": numberSchema,
+  });
+
+  const parseResult = schema.safeParse(searchParams);
+
+  if (!parseResult.success) {
+    const newParams = new URLSearchParams();
+    newParams.set("dolar-mep", mepPrice.toString());
+    redirect(`/?${newParams.toString()}`);
   }
 
   return (
