@@ -1,6 +1,8 @@
+import { PUBLIC_HOLIDAYS_ARG_2024 } from "@/api";
 import {
   differenceInDays,
   lastDayOfMonth as getLastDayOfMonth,
+  isSameDay,
   subBusinessDays,
   subDays,
 } from "date-fns";
@@ -10,7 +12,11 @@ const DIFFERENCE_PAYDAY_LAST_BUSINESS_DAY = 1;
 
 const findLastBusinessDayOfMonth = (date: Date): Date => {
   const isBusinessDay = date.getDay() !== 0 && date.getDay() !== 6;
-  if (isBusinessDay) {
+  const isPublicHoliday = PUBLIC_HOLIDAYS_ARG_2024.some((publicHoliday) =>
+    isSameDay(publicHoliday, date)
+  );
+
+  if (isBusinessDay && !isPublicHoliday) {
     return date;
   }
 

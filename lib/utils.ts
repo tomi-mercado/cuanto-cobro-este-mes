@@ -15,7 +15,7 @@ const removeParam = (paramName: string, searchParams: URLSearchParams) => {
   const newParams = new URLSearchParams(searchParams);
   newParams.delete(paramName);
 
-  window.history.pushState({}, "", `?${newParams.toString()}`);
+  window.history.replaceState({}, "", `?${newParams.toString()}`);
 };
 
 export const numberHandler = (
@@ -41,7 +41,7 @@ export const numberHandler = (
 
   const newParams = new URLSearchParams(searchParams);
   newParams.set(paramName, value);
-  window.history.pushState({}, "", `?${newParams.toString()}`);
+  window.history.replaceState({}, "", `?${newParams.toString()}`);
 };
 
 export const numberSchema = z

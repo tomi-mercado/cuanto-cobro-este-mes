@@ -59,7 +59,7 @@ const DolarMepInput: React.FC<{
   const handleReset = () => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set(PARAM, defaultValue.toString());
-    window.history.pushState({}, "", `?${newParams.toString()}`);
+    window.history.replaceState({}, "", `?${newParams.toString()}`);
   };
 
   return (
