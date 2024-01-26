@@ -16,7 +16,7 @@ const SalaryInput: React.FC = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = e.target.value.trim();
 
     if (value === "") {
       removeSalaryParam();
