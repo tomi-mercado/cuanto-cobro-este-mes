@@ -24,14 +24,29 @@ const findLastBusinessDayOfMonth = (date: Date): Date => {
   return findLastBusinessDayOfMonth(newDate);
 };
 
+const findPayDay = (lastBusinessDayOfMonth: Date): Date => {
+  const date = subBusinessDays(
+    lastBusinessDayOfMonth,
+    DIFFERENCE_PAYDAY_LAST_BUSINESS_DAY
+  );
+
+  const isBusinessDay = date.getDay() !== 0 && date.getDay() !== 6;
+  const isPublicHoliday = PUBLIC_HOLIDAYS_ARG_2024.some((publicHoliday) =>
+    isSameDay(publicHoliday, date)
+  );
+
+  if (isBusinessDay && !isPublicHoliday) {
+    return date;
+  }
+
+  return findPayDay(date);
+};
+
 const getPayDay = () => {
   const lastDayOfMonth = getLastDayOfMonth(new Date());
   const lastBusinessDayOfMonth = findLastBusinessDayOfMonth(lastDayOfMonth);
 
-  return subBusinessDays(
-    lastBusinessDayOfMonth,
-    DIFFERENCE_PAYDAY_LAST_BUSINESS_DAY
-  ).setHours(0, 0, 0, 0);
+  return findPayDay(lastBusinessDayOfMonth).setHours(0, 0, 0, 0);
 };
 
 const ImportantDays: React.FC = () => {
