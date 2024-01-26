@@ -4,6 +4,8 @@ import { arsParser, numberSchema } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 
+const NOT_WTF_MAX_SALARY = 9999;
+
 const Result: React.FC = () => {
   const searchParams = useSearchParams();
   const salaryParam = searchParams.get("salary");
@@ -11,7 +13,7 @@ const Result: React.FC = () => {
 
   const salaryParseResult = numberSchema.safeParse(salaryParam);
   const salary = salaryParseResult.success ? salaryParseResult.data : 0;
-  const isWTFSalary = salary > 9999;
+  const isWTFSalary = salary > NOT_WTF_MAX_SALARY;
 
   const mepPriceParseResult = numberSchema.safeParse(mepPriceParam);
   const mepPrice = mepPriceParseResult.success ? mepPriceParseResult.data : 0;
