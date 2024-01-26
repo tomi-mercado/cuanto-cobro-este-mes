@@ -18,11 +18,23 @@ const Result: React.FC = () => {
   const mepPriceParseResult = numberSchema.safeParse(mepPriceParam);
   const mepPrice = mepPriceParseResult.success ? mepPriceParseResult.data : 0;
 
-  const result = mepPrice * salary * 0.83;
-  const resultStr = isWTFSalary ? "🤌🤌🤌" : arsParser(result);
+  const grossResult = mepPrice * salary;
+  const grossResultStr = arsParser(grossResult);
+
+  const netResult = mepPrice * salary * 0.83;
+  const netResultStr = isWTFSalary ? "🤌🤌🤌" : arsParser(netResult);
 
   return (
-    <p className="text-3xl sm:text-5xl font-bold text-center">{resultStr}</p>
+    <>
+      <p className="text-3xl sm:text-5xl font-bold text-center">
+        {netResultStr}
+      </p>
+      {!isWTFSalary && (
+        <p className="text-sm text-center text-muted-foreground">
+          {grossResultStr} (bruto)
+        </p>
+      )}
+    </>
   );
 };
 

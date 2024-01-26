@@ -1,7 +1,7 @@
 import { getDolarMep } from "@/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { numberSchema } from "@/lib/utils";
+import { capitalize, numberSchema } from "@/lib/utils";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import DolarMepInput from "./components/DolarMepInput";
@@ -29,6 +29,7 @@ export default async function Home({
     newParams.set("dolar-mep", mepPrice.toString());
     redirect(`/?${newParams.toString()}`);
   }
+
   const currentMonthStr = capitalize(
     new Date().toLocaleString("default", {
       month: "long",
@@ -57,7 +58,7 @@ export default async function Home({
             <SalaryInput />
           </div>
           <div className="text-center flex flex-col items-center gap-1">
-            <p className="text-sm">Al día de hoy cobrarías (neto):</p>
+            <p className="text-sm">Al día de hoy cobrarías:</p>
             <Result />
           </div>
         </CardContent>
