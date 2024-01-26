@@ -49,11 +49,11 @@ const Example: React.FC<{
           </li>
           <li>
             Sueldo bruto en ARS: 400 USD * {mepPrice} ARS ={" "}
-            <strong>{400 * mepPrice} ARS</strong>
+            <strong>{(400 * mepPrice).toFixed(2)} ARS</strong>
           </li>
           <li>
             Sueldo neto en ARS: 400 * {mepPrice} ARS * 0.83 ={" "}
-            <strong>{400 * mepPrice * 0.83} ARS</strong>
+            <strong>{(400 * mepPrice * 0.83).toFixed(2)} ARS</strong>
           </li>
         </ul>
       </PopoverContent>
