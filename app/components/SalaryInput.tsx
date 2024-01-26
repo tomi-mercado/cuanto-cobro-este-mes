@@ -1,40 +1,18 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import { numberHandler } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 
+const PARAM = "salary";
+
 const SalaryInput: React.FC = () => {
   const searchParams = useSearchParams();
-  const value = searchParams.get("salary") ?? "";
-
-  const removeSalaryParam = () => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.delete("salary");
-
-    window.history.pushState({}, "", `?${newParams.toString()}`);
-  };
+  const value = searchParams.get(PARAM) ?? "";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.trim();
-
-    if (value === "") {
-      removeSalaryParam();
-    }
-
-    const dotsInValue = value.match(/\./g)?.length ?? 0;
-    if (dotsInValue > 1) {
-      return;
-    }
-
-    const numberValue = Number(value);
-    if (isNaN(numberValue)) {
-      return;
-    }
-
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set("salary", value);
-    window.history.pushState({}, "", `?${newParams.toString()}`);
+    numberHandler(e, searchParams, PARAM);
   };
 
   return (
@@ -43,7 +21,7 @@ const SalaryInput: React.FC = () => {
         USD
       </span>
       <Input
-        id="salary"
+        id={PARAM}
         onChange={handleChange}
         value={value}
         className="pl-14 h-[40px]"
