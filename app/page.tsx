@@ -10,6 +10,11 @@ import ImportantDays from "./components/ImportantDays";
 import Result from "./components/Result";
 import SalaryInput from "./components/SalaryInput";
 
+const searchParamsSchema = z.object({
+  salary: numberSchema.optional().nullable(),
+  "dolar-mep": numberSchema,
+});
+
 export default async function Home({
   searchParams,
 }: {
@@ -17,12 +22,7 @@ export default async function Home({
 }) {
   const { mepPrice, lastUpdate } = await getDolarMep();
 
-  const schema = z.object({
-    salary: numberSchema.optional().nullable(),
-    "dolar-mep": numberSchema,
-  });
-
-  const parseResult = schema.safeParse(searchParams);
+  const parseResult = searchParamsSchema.safeParse(searchParams);
 
   if (!parseResult.success) {
     const newParams = new URLSearchParams();
