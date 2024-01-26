@@ -65,15 +65,13 @@ const DolarMepInput: React.FC<{
   return (
     <div className="flex gap-2 items-center">
       <div className="relative w-full">
-        <span className="bg-gray-400 p-2 absolute left-0 top-0 rounded-l font-bold">
-          ARS
-        </span>
         <Input
           id={PARAM}
           onChange={handleChange}
           value={value}
           className="pl-14 h-[40px]"
           placeholder="650"
+          leftDecorator="ARS"
         />
       </div>
 

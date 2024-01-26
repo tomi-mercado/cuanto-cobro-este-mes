@@ -26,6 +26,7 @@ const SalaryInput: React.FC = () => {
         value={value}
         className="pl-14 h-[40px]"
         placeholder="650"
+        leftDecorator="USD"
       />
     </div>
   );
