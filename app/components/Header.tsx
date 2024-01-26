@@ -5,7 +5,7 @@ import React from "react";
 const Header: React.FC = () => {
   return (
     <header className="container py-4">
-      <Link href="/" className="flex items-center gap-4">
+      <Link href="/" className="flex items-center gap-4 w-fit">
         <div>
           <Image
             src="https://aerolab.co/static/images/favicon-167.png"
