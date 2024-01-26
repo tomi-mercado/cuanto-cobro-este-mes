@@ -45,6 +45,8 @@ const ImportantDays: React.FC = () => {
     <p className="text-lg">
       {daysUntilPayDay === 0
         ? `🍾 Hoy se cobra!`
+        : daysUntilPayDay === 1
+        ? `🥵 Mañana se cobra!`
         : `🕦 Faltan ${daysUntilPayDay} días para cobrar`}
     </p>
   );
