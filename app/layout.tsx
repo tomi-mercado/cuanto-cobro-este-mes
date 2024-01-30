@@ -7,8 +7,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Cuánto Aerocobro",
-  description: "Mi sueldo en ARS este mes en Aero",
+  title: "Cuánto cobro",
+  description: "Mi sueldo en ARS este mes",
 };
 
 export default function RootLayout({
