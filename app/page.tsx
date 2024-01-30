@@ -31,7 +31,7 @@ export default async function Home({
   }
 
   const currentMonthStr = capitalize(
-    new Date().toLocaleString("default", {
+    new Date().toLocaleString("es-AR", {
       month: "long",
     })
   );
