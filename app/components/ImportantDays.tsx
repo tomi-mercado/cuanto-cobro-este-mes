@@ -1,5 +1,6 @@
 import { PUBLIC_HOLIDAYS_ARG_2024 } from "@/api";
 import {
+  addMonths,
   differenceInDays,
   lastDayOfMonth as getLastDayOfMonth,
   isSameDay,
@@ -42,15 +43,26 @@ const findPayDay = (lastBusinessDayOfMonth: Date): Date => {
   return findPayDay(date);
 };
 
-const getPayDay = () => {
-  const lastDayOfMonth = getLastDayOfMonth(new Date());
+const getPayDay = (date: Date) => {
+  const lastDayOfMonth = getLastDayOfMonth(date);
   const lastBusinessDayOfMonth = findLastBusinessDayOfMonth(lastDayOfMonth);
 
-  return findPayDay(lastBusinessDayOfMonth).setHours(0, 0, 0, 0);
+  const payDay = findPayDay(lastBusinessDayOfMonth).setHours(0, 0, 0, 0);
+
+  const daysUntilPayDay = differenceInDays(
+    payDay,
+    new Date().setHours(0, 0, 0, 0)
+  );
+
+  if (daysUntilPayDay < 0) {
+    return findPayDay(addMonths(date, 1)).setHours(0, 0, 0, 0);
+  }
+
+  return payDay;
 };
 
 const ImportantDays: React.FC = () => {
-  const payDay = getPayDay();
+  const payDay = getPayDay(new Date());
   const daysUntilPayDay = differenceInDays(
     payDay,
     new Date().setHours(0, 0, 0, 0)
