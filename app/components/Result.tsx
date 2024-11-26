@@ -1,12 +1,12 @@
 "use client";
 
-import { arsParser, numberSchema } from "@/lib/utils";
+import { arsParser, cn, numberSchema } from "@/lib/utils";
+import { ArrowDownIcon, ArrowUpIcon, MinusIcon } from "@radix-ui/react-icons";
 import { useSearchParams } from "next/navigation";
-import React from "react";
 
 const NOT_WTF_MAX_SALARY = 9999;
 
-const Result: React.FC = () => {
+const Result = ({ realMepPrice }: { realMepPrice: number }) => {
   const searchParams = useSearchParams();
   const salaryParam = searchParams.get("salary");
   const mepPriceParam = searchParams.get("dolar-mep");
@@ -24,6 +24,28 @@ const Result: React.FC = () => {
   const netResult = mepPrice * salary * 0.83;
   const netResultStr = isWTFSalary ? "🤌🤌🤌" : arsParser(netResult);
 
+  const mepDifference = {
+    isEqual: realMepPrice === mepPrice,
+    isHigher: realMepPrice < mepPrice,
+    percentage: Math.abs(
+      ((realMepPrice - mepPrice) / realMepPrice) * 100
+    ).toFixed(2),
+  };
+
+  const differenceIcon = mepDifference.isEqual ? (
+    <MinusIcon className="size-4" />
+  ) : mepDifference.isHigher ? (
+    <ArrowUpIcon className="size-4" />
+  ) : (
+    <ArrowDownIcon className="size-4" />
+  );
+
+  const differenceText = mepDifference.isEqual
+    ? "Igual al valor real"
+    : `${mepDifference.percentage}% ${
+        mepDifference.isHigher ? "más" : "menos"
+      } que el valor real`;
+
   return (
     <>
       <p className="text-3xl sm:text-5xl font-bold text-center">
@@ -34,6 +56,20 @@ const Result: React.FC = () => {
           {grossResultStr} (bruto)
         </p>
       )}
+      <div
+        className={cn(
+          "flex items-center justify-center gap-2 rounded-full py-1 px-3 text-sm font-medium",
+          {
+            "bg-green-500/20 text-green-600": mepDifference.isHigher,
+            "bg-red-500/20 text-red-600":
+              !mepDifference.isHigher && !mepDifference.isEqual,
+            "bg-blue-500/20 text-blue-600": mepDifference.isEqual,
+          }
+        )}
+      >
+        {differenceIcon}
+        <span>{differenceText}</span>
+      </div>
     </>
   );
 };
