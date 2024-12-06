@@ -1,6 +1,11 @@
 import { getDolarMep } from "@/api";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/app/components/ui/card";
+import { Label } from "@/app/components/ui/label";
 import { capitalize, numberSchema } from "@/lib/utils";
 import { redirect } from "next/navigation";
 import { z } from "zod";
