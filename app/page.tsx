@@ -2,6 +2,7 @@ import { getDolarMep } from "@/api";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card";
@@ -45,11 +46,17 @@ export default async function Home({
 
   return (
     <>
-      <Card className="w-full max-w-2xl h-fit pb-4">
+      <Card className="w-full max-w-2xl h-fit py-4">
         <CardHeader className="pb-4 pt-2">
           <CardTitle className="sm:text-lg">
             Sueldo en pesos de {currentMonthStr}
           </CardTitle>
+
+          <CardDescription>
+            Completá todos los campos si cobrás parte del sueldo en blanco.{" "}
+            <br></br> Si cobrás como contractor, dejá en blanco el campo{" "}
+            {`"Sueldo bruto en USD"`}
+          </CardDescription>
         </CardHeader>
 
         <CardContent className="flex flex-col gap-6">

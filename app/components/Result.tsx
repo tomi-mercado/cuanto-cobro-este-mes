@@ -42,7 +42,9 @@ const Result = ({ realMepPrice }: { realMepPrice: number }) => {
       </p>
       {!isWTFSalary && (
         <p className="text-sm text-center text-muted-foreground">
-          {grossResultStr} (bruto)
+          {grossResult !== netResult || netResult === 0
+            ? `${grossResultStr} (bruto)`
+            : "No olvides que tenés que descontar prepaga, monotributo, etc etc"}
         </p>
       )}
     </>
