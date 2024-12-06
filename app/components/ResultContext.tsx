@@ -1,24 +1,20 @@
 "use client";
 
-import { arsParser, numberSchema } from "@/lib/utils";
+import { numberSchema } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import { COMPARATION_LOCAL_STORAGE_KEY } from "./SaveResultForComparation";
 
-const NOT_WTF_MAX_SALARY = 9999;
-
 const ResultContext = createContext<{
   netResult: number;
   grossResult: number;
-  isWTFSalary: boolean;
   salary: number;
   mepPrice: number;
   dolarDeel: number;
   salaryDeel: number;
-  grossResultStr: string;
-  netResultStr: string;
   isContractor: boolean;
   salaryToCompare: number | null;
+  contractorNetResult: number;
   updateSalaryToCompare: (salary: number | null) => void;
 } | null>(null);
 
@@ -48,10 +44,10 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
   const mepPriceParam = searchParams.get("dolar-mep");
   const dolarDeelParam = searchParams.get("dolar-deel");
   const salaryDeelParam = searchParams.get("salary-deel");
+  const contractorCostsParam = searchParams.get("contractor-costs");
 
   const salaryParseResult = numberSchema.safeParse(salaryParam);
   const salary = salaryParseResult.success ? salaryParseResult.data : 0;
-  const isWTFSalary = salary > NOT_WTF_MAX_SALARY;
 
   const mepPriceParseResult = numberSchema.safeParse(mepPriceParam);
   const mepPrice = mepPriceParseResult.success ? mepPriceParseResult.data : 0;
@@ -66,27 +62,31 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
     ? salaryDeelParseResult.data
     : 0;
 
+  const contractorCostsParseResult =
+    numberSchema.safeParse(contractorCostsParam);
+  const contractorCosts = contractorCostsParseResult.success
+    ? contractorCostsParseResult.data
+    : 0;
+
   const grossResult = mepPrice * salary + dolarDeel * salaryDeel;
-  const grossResultStr = arsParser(grossResult);
 
   const netResult = mepPrice * salary * 0.83 + dolarDeel * salaryDeel;
-  const netResultStr = isWTFSalary ? "🤌🤌🤌" : arsParser(netResult);
 
-  const isContractor = grossResult !== netResult || netResult === 0;
+  const isContractor = !!dolarDeel && !!salaryDeel && !salary;
+
+  const contractorNetResult = grossResult - contractorCosts;
 
   return (
     <ResultContext.Provider
       value={{
         netResult,
         grossResult,
-        isWTFSalary,
         salary,
         mepPrice,
         dolarDeel,
         salaryDeel,
-        grossResultStr,
-        netResultStr,
         salaryToCompare,
+        contractorNetResult,
         isContractor,
         updateSalaryToCompare,
       }}

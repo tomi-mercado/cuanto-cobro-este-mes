@@ -11,6 +11,7 @@ import { capitalize, numberSchema } from "@/lib/utils";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { CompareSalaries } from "./components/CompareSalaries";
+import { ContractorCostsInput } from "./components/ContractorCostsInput";
 import DolarDeelInput from "./components/DolarDeelInput";
 import DolarMepInput from "./components/DolarMepInput";
 import ImportantDays from "./components/ImportantDays";
@@ -96,6 +97,7 @@ export default async function Home({
           </div>
 
           <ResultProvider>
+            <ContractorCostsInput />
             <Result />
             <div className="mx-auto">
               <CompareSalaries />
