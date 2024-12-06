@@ -2,7 +2,7 @@
 
 import { numberSchema } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect } from "react";
 import { z } from "zod";
 import { COMPARATION_LOCAL_STORAGE_KEY } from "./SaveResultForComparation";
 
@@ -21,27 +21,38 @@ const ResultContext = createContext<{
 } | null>(null);
 
 export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
-  const [salaryToCompare, setSalaryToCompare] = useState<number | null>(null);
+  const searchParams = useSearchParams();
+
+  const salaryToCompareParam = searchParams.get("salary-to-compare");
+  const salaryToCompareParseResult =
+    numberSchema.safeParse(salaryToCompareParam);
+  const salaryToCompare = salaryToCompareParseResult.success
+    ? salaryToCompareParseResult.data
+    : null;
+
+  const updateSalaryToCompare = useCallback(
+    (salary: number | null) => {
+      const newSearchParams = new URLSearchParams(searchParams);
+      if (salary) {
+        newSearchParams.set("salary-to-compare", salary.toString());
+        localStorage.setItem(COMPARATION_LOCAL_STORAGE_KEY, salary.toString());
+      } else {
+        newSearchParams.delete("salary-to-compare");
+        localStorage.removeItem(COMPARATION_LOCAL_STORAGE_KEY);
+      }
+
+      window.history.replaceState({}, "", `?${newSearchParams.toString()}`);
+    },
+    [searchParams]
+  );
 
   useEffect(() => {
     const salary = localStorage.getItem(COMPARATION_LOCAL_STORAGE_KEY);
-    if (salary) {
-      setSalaryToCompare(Number(salary));
+    if (salary && !salaryToCompare) {
+      updateSalaryToCompare(parseInt(salary));
     }
-  }, []);
+  }, [salaryToCompare, updateSalaryToCompare]);
 
-  const updateSalaryToCompare = (salary: number | null) => {
-    setSalaryToCompare(salary);
-
-    if (!salary) {
-      localStorage.removeItem(COMPARATION_LOCAL_STORAGE_KEY);
-      return;
-    }
-
-    localStorage.setItem(COMPARATION_LOCAL_STORAGE_KEY, salary.toString());
-  };
-
-  const searchParams = useSearchParams();
   const salaryParam = searchParams.get("salary");
   const mepPriceParam = searchParams.get("dolar-mep");
   const dolarDeelParam = searchParams.get("dolar-deel");
