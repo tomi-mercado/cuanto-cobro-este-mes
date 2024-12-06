@@ -16,7 +16,8 @@ import DolarMepInput from "./components/DolarMepInput";
 import ImportantDays from "./components/ImportantDays";
 import { InfoDolarDeel } from "./components/InfoDolarDeel";
 import { InfoSueldoBrutoUSD } from "./components/InfoSueldoBrutoUSD";
-import Result, { ResultProvider } from "./components/Result";
+import Result from "./components/Result";
+import { ResultProvider } from "./components/ResultContext";
 import SalaryInput from "./components/SalaryInput";
 
 const searchParamsSchema = z.object({

@@ -2,7 +2,7 @@
 
 import { arsParser, cn } from "@/lib/utils";
 import { ArrowRight, X } from "lucide-react";
-import { useResult } from "./Result";
+import { useResult } from "./ResultContext";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 
