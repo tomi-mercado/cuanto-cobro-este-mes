@@ -42,16 +42,18 @@ export const CompareSalaries = () => {
               {arsParser(salaryToCompare)}
             </p>
           </div>
-          <ArrowRight />
+          <div className="flex flex-col gap-1 items-center">
+            <ArrowRight className="size-4" />
+            <p className="tabular-nums text-sm font-medium">
+              {percentage === 0 ? "⚖️" : percentage > 0 ? "🚀" : "📉"}{" "}
+              {percentage.toFixed(2)}%
+            </p>
+          </div>
           <div>
             <Label>Resultado:</Label>
             <p className="font-semibold text-lg">{arsParser(netResult)}</p>
           </div>
         </div>
-
-        <p className="text-center text-lg font-semibold">
-          {percentage > 0 ? "🚀" : "📉"} {percentage.toFixed(2)}%
-        </p>
       </div>
     </div>
   );
