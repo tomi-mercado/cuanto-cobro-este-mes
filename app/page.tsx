@@ -20,6 +20,7 @@ import { InfoSueldoBrutoUSD } from "./components/InfoSueldoBrutoUSD";
 import Result from "./components/Result";
 import { ResultProvider } from "./components/ResultContext";
 import SalaryInput from "./components/SalaryInput";
+import { TakeAguinaldoIntoAccount } from "./components/TakeAguinaldoIntoAccount";
 
 const searchParamsSchema = z.object({
   salary: numberSchema.optional().nullable(),
@@ -98,6 +99,7 @@ export default async function Home({
 
           <ResultProvider>
             <ContractorCostsInput />
+            <TakeAguinaldoIntoAccount />
             <Result />
             <div className="mx-auto">
               <CompareSalaries />

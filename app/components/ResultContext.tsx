@@ -3,6 +3,7 @@
 import { numberSchema } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
+import { z } from "zod";
 import { COMPARATION_LOCAL_STORAGE_KEY } from "./SaveResultForComparation";
 
 const ResultContext = createContext<{
@@ -15,6 +16,7 @@ const ResultContext = createContext<{
   isContractor: boolean;
   salaryToCompare: number | null;
   contractorNetResult: number;
+  takeAguinaldoIntoAccount: boolean;
   updateSalaryToCompare: (salary: number | null) => void;
 } | null>(null);
 
@@ -45,6 +47,7 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
   const dolarDeelParam = searchParams.get("dolar-deel");
   const salaryDeelParam = searchParams.get("salary-deel");
   const contractorCostsParam = searchParams.get("contractor-costs");
+  const takeAguinaldoIntoAccountParam = searchParams.get("aguinaldo");
 
   const salaryParseResult = numberSchema.safeParse(salaryParam);
   const salary = salaryParseResult.success ? salaryParseResult.data : 0;
@@ -68,9 +71,20 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
     ? contractorCostsParseResult.data
     : 0;
 
+  const takeAguinaldoIntoAccountParseResult = z
+    .enum(["true", "false"])
+    .safeParse(takeAguinaldoIntoAccountParam);
+
+  const takeAguinaldoIntoAccount = takeAguinaldoIntoAccountParseResult.success
+    ? takeAguinaldoIntoAccountParseResult.data === "true"
+    : false;
+
   const grossResult = mepPrice * salary + dolarDeel * salaryDeel;
 
-  const netResult = mepPrice * salary * 0.83 + dolarDeel * salaryDeel;
+  const netResult =
+    mepPrice * salary * 0.83 +
+    dolarDeel * salaryDeel +
+    (!takeAguinaldoIntoAccount ? 0 : (mepPrice * salary) / 12);
 
   const isContractor = !!dolarDeel && !!salaryDeel && !salary;
 
@@ -88,6 +102,7 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
         salaryToCompare,
         contractorNetResult,
         isContractor,
+        takeAguinaldoIntoAccount,
         updateSalaryToCompare,
       }}
     >
