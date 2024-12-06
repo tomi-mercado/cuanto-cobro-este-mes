@@ -10,12 +10,13 @@ import { Label } from "@/app/components/ui/label";
 import { capitalize, numberSchema } from "@/lib/utils";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { CompareSalaries } from "./components/CompareSalaries";
 import DolarDeelInput from "./components/DolarDeelInput";
 import DolarMepInput from "./components/DolarMepInput";
 import ImportantDays from "./components/ImportantDays";
 import { InfoDolarDeel } from "./components/InfoDolarDeel";
 import { InfoSueldoBrutoUSD } from "./components/InfoSueldoBrutoUSD";
-import Result from "./components/Result";
+import Result, { ResultProvider } from "./components/Result";
 import SalaryInput from "./components/SalaryInput";
 
 const searchParamsSchema = z.object({
@@ -93,10 +94,12 @@ export default async function Home({
             </div>
           </div>
 
-          <div className="text-center flex flex-col items-center gap-1">
-            <p className="text-sm">Al día de hoy cobrarías:</p>
-            <Result realMepPrice={mepPrice} />
-          </div>
+          <ResultProvider>
+            <Result />
+            <div className="mx-auto">
+              <CompareSalaries />
+            </div>
+          </ResultProvider>
         </CardContent>
       </Card>
 

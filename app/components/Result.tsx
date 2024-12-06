@@ -2,10 +2,49 @@
 
 import { arsParser, numberSchema } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
+import { createContext, useContext, useEffect, useState } from "react";
+import {
+  COMPARATION_LOCAL_STORAGE_KEY,
+  SaveResultForComparation,
+} from "./SaveResultForComparation";
 
 const NOT_WTF_MAX_SALARY = 9999;
 
-const Result = ({ realMepPrice }: { realMepPrice: number }) => {
+const ResultContext = createContext<{
+  netResult: number;
+  grossResult: number;
+  isWTFSalary: boolean;
+  salary: number;
+  mepPrice: number;
+  dolarDeel: number;
+  salaryDeel: number;
+  grossResultStr: string;
+  netResultStr: string;
+  salaryToCompare: number | null;
+  updateSalaryToCompare: (salary: number | null) => void;
+} | null>(null);
+
+export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
+  const [salaryToCompare, setSalaryToCompare] = useState<number | null>(null);
+
+  useEffect(() => {
+    const salary = localStorage.getItem(COMPARATION_LOCAL_STORAGE_KEY);
+    if (salary) {
+      setSalaryToCompare(Number(salary));
+    }
+  }, []);
+
+  const updateSalaryToCompare = (salary: number | null) => {
+    setSalaryToCompare(salary);
+
+    if (!salary) {
+      localStorage.removeItem(COMPARATION_LOCAL_STORAGE_KEY);
+      return;
+    }
+
+    localStorage.setItem(COMPARATION_LOCAL_STORAGE_KEY, salary.toString());
+  };
+
   const searchParams = useSearchParams();
   const salaryParam = searchParams.get("salary");
   const mepPriceParam = searchParams.get("dolar-mep");
@@ -36,9 +75,44 @@ const Result = ({ realMepPrice }: { realMepPrice: number }) => {
   const netResultStr = isWTFSalary ? "🤌🤌🤌" : arsParser(netResult);
 
   return (
-    <>
-      <p className="text-3xl sm:text-5xl font-bold text-center">
-        {netResultStr}
+    <ResultContext.Provider
+      value={{
+        netResult,
+        grossResult,
+        isWTFSalary,
+        salary,
+        mepPrice,
+        dolarDeel,
+        salaryDeel,
+        grossResultStr,
+        netResultStr,
+        salaryToCompare,
+        updateSalaryToCompare,
+      }}
+    >
+      {children}
+    </ResultContext.Provider>
+  );
+};
+
+export const useResult = () => {
+  const context = useContext(ResultContext);
+  if (!context) {
+    throw new Error("useResult must be used within a ResultProvider");
+  }
+
+  return context;
+};
+
+const Result = () => {
+  const { netResult, grossResult, isWTFSalary, grossResultStr, netResultStr } =
+    useResult();
+
+  return (
+    <div className="text-center flex flex-col items-center gap-1">
+      <p className="text-sm">Al día de hoy cobrarías:</p>
+      <p className="text-3xl sm:text-5xl font-bold text-center inline-flex gap-4 items-center">
+        {netResultStr} <SaveResultForComparation />
       </p>
       {!isWTFSalary && (
         <p className="text-sm text-center text-muted-foreground">
@@ -47,7 +121,7 @@ const Result = ({ realMepPrice }: { realMepPrice: number }) => {
             : "No olvides que tenés que descontar prepaga, monotributo, etc etc"}
         </p>
       )}
-    </>
+    </div>
   );
 };
 
