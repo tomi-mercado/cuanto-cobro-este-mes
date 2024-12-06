@@ -95,7 +95,7 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
   const netResult =
     mepPrice * salary * 0.83 +
     dolarDeel * salaryDeel +
-    (!takeAguinaldoIntoAccount ? 0 : (mepPrice * salary) / 12);
+    (!takeAguinaldoIntoAccount ? 0 : (mepPrice * salary * 0.83) / 12);
 
   const isContractor = !!dolarDeel && !!salaryDeel && !salary;
 
