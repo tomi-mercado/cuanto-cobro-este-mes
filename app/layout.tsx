@@ -26,7 +26,9 @@ export default function RootLayout({
     <html lang="es-AR" className="h-full">
       <body className={cn(inter.className, "h-full", "dark")}>
         <Header />
-        {children}
+        <main className="h-full w-full container p-6 flex items-center flex-col gap-6">
+          {children}
+        </main>
       </body>
     </html>
   );

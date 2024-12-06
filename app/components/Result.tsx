@@ -10,6 +10,8 @@ const Result = ({ realMepPrice }: { realMepPrice: number }) => {
   const searchParams = useSearchParams();
   const salaryParam = searchParams.get("salary");
   const mepPriceParam = searchParams.get("dolar-mep");
+  const dolarDeelParam = searchParams.get("dolar-deel");
+  const salaryDeelParam = searchParams.get("salary-deel");
 
   const salaryParseResult = numberSchema.safeParse(salaryParam);
   const salary = salaryParseResult.success ? salaryParseResult.data : 0;
@@ -18,10 +20,20 @@ const Result = ({ realMepPrice }: { realMepPrice: number }) => {
   const mepPriceParseResult = numberSchema.safeParse(mepPriceParam);
   const mepPrice = mepPriceParseResult.success ? mepPriceParseResult.data : 0;
 
-  const grossResult = mepPrice * salary;
+  const dolarDeelParseResult = numberSchema.safeParse(dolarDeelParam);
+  const dolarDeel = dolarDeelParseResult.success
+    ? dolarDeelParseResult.data
+    : 0;
+
+  const salaryDeelParseResult = numberSchema.safeParse(salaryDeelParam);
+  const salaryDeel = salaryDeelParseResult.success
+    ? salaryDeelParseResult.data
+    : 0;
+
+  const grossResult = mepPrice * salary + dolarDeel * salaryDeel;
   const grossResultStr = arsParser(grossResult);
 
-  const netResult = mepPrice * salary * 0.83;
+  const netResult = mepPrice * salary * 0.83 + dolarDeel * salaryDeel;
   const netResultStr = isWTFSalary ? "🤌🤌🤌" : arsParser(netResult);
 
   const mepDifference = {
@@ -44,7 +56,7 @@ const Result = ({ realMepPrice }: { realMepPrice: number }) => {
     ? "Igual al valor real"
     : `${mepDifference.percentage}% ${
         mepDifference.isHigher ? "más" : "menos"
-      } que el valor real`;
+      } que el valor real del MEP`;
 
   return (
     <>

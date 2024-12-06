@@ -5,7 +5,7 @@ import { numberHandler } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 
-const SalaryInput = ({ param }: { param: string }) => {
+const DolarDeelInput = ({ param }: { param: string }) => {
   const searchParams = useSearchParams();
   const value = searchParams.get(param) ?? "";
 
@@ -19,10 +19,10 @@ const SalaryInput = ({ param }: { param: string }) => {
       onChange={handleChange}
       value={value}
       className="pl-14 h-[40px]"
-      placeholder="650"
-      leftDecorator="USD"
+      placeholder="1050"
+      leftDecorator="ARS"
     />
   );
 };
 
-export default SalaryInput;
+export default DolarDeelInput;

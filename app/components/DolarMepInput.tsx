@@ -78,7 +78,7 @@ const DolarMepInput: React.FC<{
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button onClick={handleReset}>
+            <Button onClick={handleReset} size="sm" className="px-2">
               <UpdateIcon />
             </Button>
           </TooltipTrigger>
