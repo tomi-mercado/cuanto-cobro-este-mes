@@ -1,7 +1,6 @@
 "use client";
 
-import { arsParser, cn, numberSchema } from "@/lib/utils";
-import { ArrowDownIcon, ArrowUpIcon, MinusIcon } from "@radix-ui/react-icons";
+import { arsParser, numberSchema } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 
 const NOT_WTF_MAX_SALARY = 9999;
@@ -36,28 +35,6 @@ const Result = ({ realMepPrice }: { realMepPrice: number }) => {
   const netResult = mepPrice * salary * 0.83 + dolarDeel * salaryDeel;
   const netResultStr = isWTFSalary ? "🤌🤌🤌" : arsParser(netResult);
 
-  const mepDifference = {
-    isEqual: realMepPrice === mepPrice,
-    isHigher: realMepPrice < mepPrice,
-    percentage: Math.abs(
-      ((realMepPrice - mepPrice) / realMepPrice) * 100
-    ).toFixed(2),
-  };
-
-  const differenceIcon = mepDifference.isEqual ? (
-    <MinusIcon className="size-4" />
-  ) : mepDifference.isHigher ? (
-    <ArrowUpIcon className="size-4" />
-  ) : (
-    <ArrowDownIcon className="size-4" />
-  );
-
-  const differenceText = mepDifference.isEqual
-    ? "Igual al valor real"
-    : `${mepDifference.percentage}% ${
-        mepDifference.isHigher ? "más" : "menos"
-      } que el valor real del MEP`;
-
   return (
     <>
       <p className="text-3xl sm:text-5xl font-bold text-center">
@@ -68,20 +45,6 @@ const Result = ({ realMepPrice }: { realMepPrice: number }) => {
           {grossResultStr} (bruto)
         </p>
       )}
-      <div
-        className={cn(
-          "flex items-center justify-center gap-2 rounded-full py-1 px-3 text-sm font-medium",
-          {
-            "bg-green-500/20 text-green-600": mepDifference.isHigher,
-            "bg-red-500/20 text-red-600":
-              !mepDifference.isHigher && !mepDifference.isEqual,
-            "bg-blue-500/20 text-blue-600": mepDifference.isEqual,
-          }
-        )}
-      >
-        {differenceIcon}
-        <span>{differenceText}</span>
-      </div>
     </>
   );
 };
