@@ -27,6 +27,7 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
   const salaryToCompare = salaryToCompareParseResult.success
     ? salaryToCompareParseResult.data
     : null;
+  const isContractor = searchParams.get("contractor") === "true";
 
   const updateSalaryToCompare = useCallback(
     (salary: number | null) => {
@@ -85,8 +86,6 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
     mepPrice * salary * 0.83 +
     dolarDeel * salaryDeel +
     (!takeAguinaldoIntoAccount ? 0 : (mepPrice * salary * 0.83) / 12);
-
-  const isContractor = !!dolarDeel && !!salaryDeel && !salary;
 
   const contractorNetResult = grossResult - contractorCosts;
 

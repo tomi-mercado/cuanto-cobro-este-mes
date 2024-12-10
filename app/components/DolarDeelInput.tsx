@@ -4,24 +4,33 @@ import { Input } from "@/app/components/ui/input";
 import { numberHandler } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import React from "react";
+import { InfoDolarDeel } from "./InfoDolarDeel";
+import { Label } from "./ui/label";
 
-const DolarDeelInput = ({ param }: { param: string }) => {
+const PARAM = "dolar-deel";
+
+const DolarDeelInput = () => {
   const searchParams = useSearchParams();
-  const value = searchParams.get(param) ?? "";
+  const value = searchParams.get(PARAM) ?? "";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    numberHandler(e, searchParams, param);
+    numberHandler(e, searchParams, PARAM);
   };
 
   return (
-    <Input
-      id={param}
-      onChange={handleChange}
-      value={value}
-      className="pl-14 h-[40px]"
-      placeholder="1050"
-      leftDecorator="ARS"
-    />
+    <div>
+      <Label htmlFor="dolar-deel" className="inline-flex gap-1 items-center">
+        Dólar Deel <InfoDolarDeel />
+      </Label>
+      <Input
+        id={PARAM}
+        onChange={handleChange}
+        value={value}
+        className="pl-14 h-[40px]"
+        placeholder="1050"
+        leftDecorator="ARS"
+      />
+    </div>
   );
 };
 

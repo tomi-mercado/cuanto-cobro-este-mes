@@ -11,6 +11,8 @@ import {
 import { arsParser, numberHandler } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import React, { useRef } from "react";
+import { useResult } from "./ResultContext";
+import { Label } from "./ui/label";
 
 const PARAM = "dolar-mep";
 
@@ -62,34 +64,43 @@ const DolarMepInput: React.FC<{
     window.history.replaceState({}, "", `?${newParams.toString()}`);
   };
 
-  return (
-    <div className="flex gap-2 items-center">
-      <div className="relative w-full">
-        <Input
-          id={PARAM}
-          onChange={handleChange}
-          value={value}
-          className="pl-14 h-[40px]"
-          placeholder="650"
-          leftDecorator="ARS"
-        />
-      </div>
+  const { isContractor } = useResult();
 
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button onClick={handleReset} size="sm" className="px-2">
-              <UpdateIcon />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p className="text-xs sm:text-sm">
-              Restaurar precio actual ({arsParser(defaultValue)}) (Última
-              actualización: {formatDate(lastUpdate)})
-            </p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+  if (isContractor) {
+    return null;
+  }
+
+  return (
+    <div>
+      <Label htmlFor="dolar-mep">Valor del Dólar MEP</Label>
+      <div className="flex gap-2 items-center">
+        <div className="relative w-full">
+          <Input
+            id={PARAM}
+            onChange={handleChange}
+            value={value}
+            className="pl-14 h-[40px]"
+            placeholder="650"
+            leftDecorator="ARS"
+          />
+        </div>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button onClick={handleReset} size="sm" className="px-2">
+                <UpdateIcon />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="text-xs sm:text-sm">
+                Restaurar precio actual ({arsParser(defaultValue)}) (Última
+                actualización: {formatDate(lastUpdate)})
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
     </div>
   );
 };
