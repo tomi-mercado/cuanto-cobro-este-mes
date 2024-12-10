@@ -80,7 +80,8 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
     ? takeAguinaldoIntoAccountParseResult.data === "true"
     : false;
 
-  const grossResult = mepPrice * salary + dolarDeel * salaryDeel;
+  const grossResult =
+    (!isContractor ? mepPrice * salary : 0) + dolarDeel * salaryDeel;
 
   const dependencyNetResult =
     mepPrice * salary * 0.83 +
