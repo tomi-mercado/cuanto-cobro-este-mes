@@ -14,7 +14,6 @@ const ResultContext = createContext<{
   salaryDeel: number;
   isContractor: boolean;
   salaryToCompare: number | null;
-  contractorNetResult: number;
   takeAguinaldoIntoAccount: boolean;
   updateSalaryToCompare: (salary: number | null) => void;
 } | null>(null);
@@ -82,7 +81,7 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
 
   const grossResult = mepPrice * salary + dolarDeel * salaryDeel;
 
-  const netResult =
+  const dependencyNetResult =
     mepPrice * salary * 0.83 +
     dolarDeel * salaryDeel +
     (!takeAguinaldoIntoAccount ? 0 : (mepPrice * salary * 0.83) / 12);
@@ -90,6 +89,8 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
   const isContractor = !!dolarDeel && !!salaryDeel && !salary;
 
   const contractorNetResult = grossResult - contractorCosts;
+
+  const netResult = isContractor ? contractorNetResult : dependencyNetResult;
 
   return (
     <ResultContext.Provider
@@ -101,7 +102,6 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
         dolarDeel,
         salaryDeel,
         salaryToCompare,
-        contractorNetResult,
         isContractor,
         takeAguinaldoIntoAccount,
         updateSalaryToCompare,

@@ -7,19 +7,12 @@ import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 
 export const CompareSalaries = () => {
-  const {
-    netResult: netResultDependency,
-    contractorNetResult,
-    isContractor,
-    salaryToCompare,
-    updateSalaryToCompare,
-  } = useResult();
+  const { netResult, isContractor, salaryToCompare, updateSalaryToCompare } =
+    useResult();
 
   if (!salaryToCompare) {
     return null;
   }
-
-  const netResult = isContractor ? contractorNetResult : netResultDependency;
 
   const isBetter = netResult > salaryToCompare;
   const isLess = netResult < salaryToCompare;

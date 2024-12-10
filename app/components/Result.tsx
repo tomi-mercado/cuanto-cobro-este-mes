@@ -5,11 +5,9 @@ import { useResult } from "./ResultContext";
 import { SaveResultForComparation } from "./SaveResultForComparation";
 
 const Result = () => {
-  const { netResult, grossResult, isContractor, contractorNetResult } =
-    useResult();
+  const { netResult, grossResult } = useResult();
 
-  const netResultToUse = isContractor ? contractorNetResult : netResult;
-  const netResultStr = arsParser(netResultToUse);
+  const netResultStr = arsParser(netResult);
   const grossResultStr = arsParser(grossResult);
 
   return (
