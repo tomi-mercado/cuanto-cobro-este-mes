@@ -80,7 +80,6 @@ const DolarMepInput: React.FC<{
             onChange={handleChange}
             value={value}
             className="pl-14 h-[40px]"
-            placeholder="650"
             leftDecorator="ARS"
           />
         </div>

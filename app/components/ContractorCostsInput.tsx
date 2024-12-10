@@ -2,7 +2,6 @@
 
 import { numberHandler } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
-import { InfoContractorCosts } from "./InfoContractorCosts";
 import { useResult } from "./ResultContext";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -25,14 +24,14 @@ export const ContractorCostsInput = () => {
   return (
     <div>
       <Label className="inline-flex gap-1 items-center" htmlFor={PARAM}>
-        Costos por ser contractor <InfoContractorCosts />
+        Costos por ser contractor
       </Label>
       <Input
         id={PARAM}
         onChange={handleChange}
         value={value}
         className="pl-14 h-[40px]"
-        placeholder="200000"
+        placeholder="Comisiones de apps, prepaga, monotributo, internet, etc"
         leftDecorator="ARS"
       />
     </div>

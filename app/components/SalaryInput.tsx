@@ -4,11 +4,16 @@ import { Input } from "@/app/components/ui/input";
 import { numberHandler } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import React from "react";
-import { InfoSueldoBrutoUSD } from "./InfoSueldoBrutoUSD";
 import { useResult } from "./ResultContext";
 import { Label } from "./ui/label";
 
-const SalaryInput = ({ param }: { param: string }) => {
+const SalaryInput = ({
+  param,
+  placeholder,
+}: {
+  param: string;
+  placeholder?: string;
+}) => {
   const searchParams = useSearchParams();
   const value = searchParams.get(param) ?? "";
 
@@ -22,8 +27,8 @@ const SalaryInput = ({ param }: { param: string }) => {
       onChange={handleChange}
       value={value}
       className="pl-14 h-[40px]"
-      placeholder="650"
       leftDecorator="USD"
+      placeholder={placeholder}
     />
   );
 };
@@ -39,9 +44,11 @@ export const DependencySalaryInput = () => {
     <div>
       <Label htmlFor="salary" className="inline-flex gap-1 items-center">
         Sueldo bruto en USD
-        <InfoSueldoBrutoUSD />
       </Label>
-      <SalaryInput param="salary" />
+      <SalaryInput
+        param="salary"
+        placeholder={`Los dólares que se cobran pesificados en el banco. La parte "en blanco".`}
+      />
     </div>
   );
 };

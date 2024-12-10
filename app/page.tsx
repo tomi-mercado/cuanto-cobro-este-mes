@@ -50,7 +50,7 @@ export default async function Home({
 
   return (
     <>
-      <Card className="w-full max-w-2xl h-fit py-4">
+      <Card className="w-full max-w-3xl h-fit py-4">
         <CardHeader className="pb-8 pt-2">
           <CardTitle className="sm:text-lg">
             Sueldo en pesos de {currentMonthStr}
