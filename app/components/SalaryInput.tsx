@@ -45,10 +45,7 @@ export const DependencySalaryInput = () => {
       <Label htmlFor="salary" className="inline-flex gap-1 items-center">
         Sueldo bruto en USD
       </Label>
-      <SalaryInput
-        param="salary"
-        placeholder={`Los dólares que se cobran pesificados en el banco. La parte "en blanco".`}
-      />
+      <SalaryInput param="salary" placeholder={`USD pesificados "en blanco"`} />
     </div>
   );
 };
