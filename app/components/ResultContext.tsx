@@ -2,9 +2,8 @@
 
 import { numberSchema } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
-import { createContext, useCallback, useContext, useEffect } from "react";
+import { createContext, useCallback, useContext } from "react";
 import { z } from "zod";
-import { COMPARATION_LOCAL_STORAGE_KEY } from "./SaveResultForComparation";
 
 const ResultContext = createContext<{
   netResult: number;
@@ -35,23 +34,14 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
       const newSearchParams = new URLSearchParams(searchParams);
       if (salary) {
         newSearchParams.set("salary-to-compare", salary.toString());
-        localStorage.setItem(COMPARATION_LOCAL_STORAGE_KEY, salary.toString());
       } else {
         newSearchParams.delete("salary-to-compare");
-        localStorage.removeItem(COMPARATION_LOCAL_STORAGE_KEY);
       }
 
       window.history.replaceState({}, "", `?${newSearchParams.toString()}`);
     },
     [searchParams]
   );
-
-  useEffect(() => {
-    const salary = localStorage.getItem(COMPARATION_LOCAL_STORAGE_KEY);
-    if (salary && !salaryToCompare) {
-      updateSalaryToCompare(parseInt(salary));
-    }
-  }, [salaryToCompare, updateSalaryToCompare]);
 
   const salaryParam = searchParams.get("salary");
   const mepPriceParam = searchParams.get("dolar-mep");

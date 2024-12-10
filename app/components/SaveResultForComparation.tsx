@@ -8,8 +8,6 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 
-export const COMPARATION_LOCAL_STORAGE_KEY = "salary-for-comparation";
-
 export const SaveResultForComparation = () => {
   const { netResult, updateSalaryToCompare } = useResult();
 
