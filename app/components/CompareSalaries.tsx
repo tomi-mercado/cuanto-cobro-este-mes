@@ -36,7 +36,7 @@ export const CompareSalaries = () => {
           "bg-blue-500/20 text-blue-600": isTheSame,
         })}
       >
-        <div className="flex gap-6 items-center justify-center">
+        <div className="flex sm:gap-6 items-center justify-center flex-col gap-4 sm:flex-row">
           <div>
             <Label>Comparando con:</Label>
             <p className="font-semibold text-lg">
