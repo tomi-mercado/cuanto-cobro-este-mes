@@ -1,4 +1,4 @@
-import { PUBLIC_HOLIDAYS_ARG_2024 } from "@/api";
+import { PUBLIC_HOLIDAYS_ARG } from "@/api";
 import {
   addMonths,
   differenceInDays,
@@ -13,7 +13,7 @@ const DIFFERENCE_PAYDAY_LAST_BUSINESS_DAY = 1;
 
 const findLastBusinessDayOfMonth = (date: Date): Date => {
   const isBusinessDay = date.getDay() !== 0 && date.getDay() !== 6;
-  const isPublicHoliday = PUBLIC_HOLIDAYS_ARG_2024.some((publicHoliday) =>
+  const isPublicHoliday = PUBLIC_HOLIDAYS_ARG.some((publicHoliday) =>
     isSameDay(publicHoliday, date)
   );
 
@@ -32,7 +32,7 @@ const findPayDay = (lastBusinessDayOfMonth: Date): Date => {
   );
 
   const isBusinessDay = date.getDay() !== 0 && date.getDay() !== 6;
-  const isPublicHoliday = PUBLIC_HOLIDAYS_ARG_2024.some((publicHoliday) =>
+  const isPublicHoliday = PUBLIC_HOLIDAYS_ARG.some((publicHoliday) =>
     isSameDay(publicHoliday, date)
   );
 

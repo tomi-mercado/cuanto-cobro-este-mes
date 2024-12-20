@@ -27,7 +27,7 @@ export const getDolarMep = async () => {
     .parse(await response.json());
 };
 
-export const PUBLIC_HOLIDAYS_ARG_2024 = [
+export const PUBLIC_HOLIDAYS_ARG = [
   // Año nuevo
   new Date(2024, 0, 1),
   // Carnaval
@@ -66,4 +66,42 @@ export const PUBLIC_HOLIDAYS_ARG_2024 = [
   new Date(2024, 11, 8),
   // Navidad
   new Date(2024, 11, 25),
+
+  /**
+   * 2025
+   */
+  // Año nuevo
+  new Date(2025, 0, 1),
+  // Carnaval
+  new Date(2025, 2, 3),
+  new Date(2025, 2, 4),
+  // Día de la Memoria
+  new Date(2025, 2, 24),
+  // Malvinas
+  new Date(2025, 3, 2),
+  // Semana Santa
+  new Date(2025, 3, 17),
+  new Date(2025, 3, 18),
+  // Ex dia de la raza
+  new Date(2025, 3, 24),
+  // Día del Trabajador
+  new Date(2025, 4, 1),
+  // Feriado puente
+  new Date(2025, 4, 2),
+  // Guemes
+  new Date(2025, 5, 16),
+  // Belgrano
+  new Date(2025, 5, 20),
+  // Dia de la Independencia
+  new Date(2025, 6, 9),
+  // San Martin
+  new Date(2025, 7, 15),
+  // Feriado puente
+  new Date(2025, 10, 21),
+  // Soberania
+  new Date(2025, 10, 24),
+  // Inmaculada
+  new Date(2025, 11, 8),
+  // Navidad
+  new Date(2025, 11, 25),
 ];
